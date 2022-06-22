@@ -77,6 +77,7 @@ const AgoraUIKit: React.FC<AgoraUIKitProps> = (props) => {
       rtmCallbacks={props.rtmCallbacks}
       styleProps={props.styleProps}
       fallback={props.fallback}
+      additionalProps={props.additionalProps}
     />
   );
 };
