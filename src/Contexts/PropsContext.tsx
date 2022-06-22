@@ -413,6 +413,15 @@ export interface AgoraUIKitProps {
    * Fallback component when no video is displayed
    */
   fallback: React.ComponentType<{user: UidInterface, type: 'MIN' | 'MAX'}>;
+  /* 
+   * Additional props
+   */
+  additionalProps: {
+    onChatPressed?: (isOpen: boolean) => void;
+    isChatOpen?: boolean;
+    onMenuPressed?: (isOpen: boolean) => void;
+    isMenuOpen?: boolean;
+  };
 }
 
 export type rtcCallbacks = Partial<CallbacksInterface>;
@@ -468,6 +477,14 @@ export interface IconsInterface {
    * Icon to close the overlay in floating layout
    */
   close: string;
+  /**
+   * Icon for chat
+   */
+  chat: string;
+  /**
+   * Icon for menu
+   */
+  menu: string;
 }
 
 const PropsContext = React.createContext<PropsInterface>(initialValue);

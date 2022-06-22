@@ -2,6 +2,8 @@ import React, {useContext} from 'react';
 import {View} from 'react-native';
 import styles from '../Style';
 import EndCall from './Local/EndCall';
+import ChatButton from './Local/Chat';
+import MenuButton from './Local/Menu';
 import LocalAudioMute from './Local/LocalAudioMute';
 import LocalVideoMute from './Local/LocalVideoMute';
 import SwitchCamera from './Local/SwitchCamera';
@@ -25,6 +27,8 @@ function Controls(props: ControlsPropsInterface) {
             <LocalAudioMute />
             <LocalVideoMute />
             <SwitchCamera />
+            <ChatButton />
+            <MenuButton />
           </>
         )}
         <EndCall />
