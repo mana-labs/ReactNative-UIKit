@@ -11,15 +11,14 @@ const RemoteView = RtcRemoteView.SurfaceView;
 
 interface MaxViewInterface {
   user: UidInterface;
-  fallback?: React.ComponentType;
 }
 /**
  * MaxVideoView takes in a user and renders the video
  */
 const MaxVideoView: React.FC<MaxViewInterface> = (props) => {
-  const {styleProps, rtcProps} = useContext(PropsContext);
+  const {styleProps, rtcProps, fallback} = useContext(PropsContext);
   const {maxViewStyles} = styleProps || {};
-  const Fallback = props.fallback;
+  const Fallback = fallback;
 
   return (
     <React.Fragment>
@@ -28,10 +27,10 @@ const MaxVideoView: React.FC<MaxViewInterface> = (props) => {
         props.user.video ? (
           <LocalView
             style={{...styles.fullView, ...(maxViewStyles as object)}}
-            renderMode={VideoRenderMode.Fit}
+            renderMode={styleProps?.videoMode?.max}
           />
         ) : Fallback ? (
-          <Fallback />
+          <Fallback user={props.user} type="MAX" />
         ) : (
           <DefaultFallback />
         )
@@ -39,10 +38,10 @@ const MaxVideoView: React.FC<MaxViewInterface> = (props) => {
         <RemoteView
           style={{...styles.fullView, ...(maxViewStyles as object)}}
           uid={props.user.uid as number}
-          renderMode={VideoRenderMode.Fit}
+          renderMode={styleProps?.videoMode?.max}
         />
       ) : Fallback ? (
-        <Fallback />
+        <Fallback user={props.user} type="MAX" />
       ) : (
         <DefaultFallback />
       )}

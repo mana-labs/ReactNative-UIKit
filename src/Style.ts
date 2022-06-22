@@ -46,6 +46,7 @@ export default StyleSheet.create({
     position: 'absolute',
     bottom: 25,
     left: 0,
+    right: 0,
     width: '100%',
     height: 70,
     zIndex: 10,

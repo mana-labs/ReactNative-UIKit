@@ -6,7 +6,7 @@ import React, {
   useState,
 } from 'react';
 import {Dimensions, StyleSheet, View} from 'react-native';
-import MaxVideoView from './MaxVideoView';
+import MaxVideoView from './MaxVideoView.native';
 import MinUidContext from '../Contexts/MinUidContext';
 import MaxUidContext from '../Contexts/MaxUidContext';
 import PropsContext, {ClientRole} from '../Contexts/PropsContext';

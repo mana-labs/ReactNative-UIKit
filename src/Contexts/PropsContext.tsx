@@ -409,6 +409,10 @@ export interface AgoraUIKitProps {
    * Callbacks for the signalling layer
    */
   rtmCallbacks?: rtmCallbacks;
+  /**
+   * Fallback component when no video is displayed
+   */
+  fallback: React.ComponentType<{user: UidInterface, type: 'MIN' | 'MAX'}>;
 }
 
 export type rtcCallbacks = Partial<CallbacksInterface>;
@@ -418,6 +422,7 @@ export interface PropsInterface {
   styleProps?: Partial<StylePropInterface>;
   callbacks?: Partial<CallbacksInterface>;
   rtmCallbacks?: rtmCallbacks;
+  fallback?: React.ComponentType<{user: UidInterface, type: 'MIN' | 'MAX' }>;
 }
 
 const initialValue: PropsInterface = {

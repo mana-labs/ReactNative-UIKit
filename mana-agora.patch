@@ -1,0 +1,270 @@
+diff --git a/src/AgoraUIKit.tsx b/src/AgoraUIKit.tsx
+index 24f6a86..d861ddd 100644
+--- a/src/AgoraUIKit.tsx
++++ b/src/AgoraUIKit.tsx
+@@ -76,6 +76,7 @@ const AgoraUIKit: React.FC<AgoraUIKitProps> = (props) => {
+       callbacks={props.rtcCallbacks}
+       rtmCallbacks={props.rtmCallbacks}
+       styleProps={props.styleProps}
++      fallback={props.fallback}
+     />
+   );
+ };
+diff --git a/src/Contexts/PropsContext.tsx b/src/Contexts/PropsContext.tsx
+index 2075c8d..a031f08 100644
+--- a/src/Contexts/PropsContext.tsx
++++ b/src/Contexts/PropsContext.tsx
+@@ -409,6 +409,10 @@ export interface AgoraUIKitProps {
+    * Callbacks for the signalling layer
+    */
+   rtmCallbacks?: rtmCallbacks;
++  /**
++   * Fallback component when no video is displayed
++   */
++  fallback: React.ComponentType<{user: UidInterface, type: 'MIN' | 'MAX'}>;
+ }
+ 
+ export type rtcCallbacks = Partial<CallbacksInterface>;
+@@ -418,6 +422,7 @@ export interface PropsInterface {
+   styleProps?: Partial<StylePropInterface>;
+   callbacks?: Partial<CallbacksInterface>;
+   rtmCallbacks?: rtmCallbacks;
++  fallback?: React.ComponentType<{user: UidInterface, type: 'MIN' | 'MAX' }>;
+ }
+ 
+ const initialValue: PropsInterface = {
+diff --git a/src/Controls/BtnTemplate.tsx b/src/Controls/BtnTemplate.tsx
+index 5227ebe..8e4f7b3 100644
+--- a/src/Controls/BtnTemplate.tsx
++++ b/src/Controls/BtnTemplate.tsx
+@@ -71,15 +71,6 @@ const BtnTemplate: React.FC<BtnTemplateInterface> = (props) => {
+           }}
+         />
+       </View>
+-      <Text
+-        style={{
+-          textAlign: 'center',
+-          marginTop: 5,
+-          color: disabled ? 'grey' : props.color || theme || '#fff',
+-          opacity: disabled ? 0.4 : 1,
+-        }}>
+-        {props.btnText}
+-      </Text>
+     </TouchableOpacity>
+   );
+ };
+diff --git a/src/Style.ts b/src/Style.ts
+index 6821c83..2de0653 100644
+--- a/src/Style.ts
++++ b/src/Style.ts
+@@ -46,6 +46,7 @@ export default StyleSheet.create({
+     position: 'absolute',
+     bottom: 25,
+     left: 0,
++    right: 0,
+     width: '100%',
+     height: 70,
+     zIndex: 10,
+diff --git a/src/Utils/quality.tsx b/src/Utils/quality.tsx
+index ca2e26f..bced72c 100644
+--- a/src/Utils/quality.tsx
++++ b/src/Utils/quality.tsx
+@@ -1,3 +1,5 @@
++import { Dimensions } from "react-native";
++
+ const quality = {
+   '120p_1': {
+     dimensions: {
+@@ -239,6 +241,14 @@ const quality = {
+     frameRate: 30,
+     bitRate: 1380,
+   },
++  'dynamic': {
++    dimensions: {
++      width: Dimensions.get('screen').width,
++      height: Dimensions.get('screen').height,
++    },
++    frameRate: 30,
++    bitRate: 1380,
++  }
+ };
+ 
+ export default quality;
+diff --git a/src/Views/GridVideo.tsx b/src/Views/GridVideo.tsx
+index dbe0bbb..21e8d12 100644
+--- a/src/Views/GridVideo.tsx
++++ b/src/Views/GridVideo.tsx
+@@ -6,7 +6,7 @@ import React, {
+   useState,
+ } from 'react';
+ import {Dimensions, StyleSheet, View} from 'react-native';
+-import MaxVideoView from './MaxVideoView';
++import MaxVideoView from './MaxVideoView.native';
+ import MinUidContext from '../Contexts/MinUidContext';
+ import MaxUidContext from '../Contexts/MaxUidContext';
+ import PropsContext, {ClientRole} from '../Contexts/PropsContext';
+diff --git a/src/Views/MaxVideoView.native.tsx b/src/Views/MaxVideoView.native.tsx
+index c8ecedd..29a8091 100644
+--- a/src/Views/MaxVideoView.native.tsx
++++ b/src/Views/MaxVideoView.native.tsx
+@@ -11,15 +11,14 @@ const RemoteView = RtcRemoteView.SurfaceView;
+ 
+ interface MaxViewInterface {
+   user: UidInterface;
+-  fallback?: React.ComponentType;
+ }
+ /**
+  * MaxVideoView takes in a user and renders the video
+  */
+ const MaxVideoView: React.FC<MaxViewInterface> = (props) => {
+-  const {styleProps, rtcProps} = useContext(PropsContext);
++  const {styleProps, rtcProps, fallback} = useContext(PropsContext);
+   const {maxViewStyles} = styleProps || {};
+-  const Fallback = props.fallback;
++  const Fallback = fallback;
+ 
+   return (
+     <React.Fragment>
+@@ -28,10 +27,10 @@ const MaxVideoView: React.FC<MaxViewInterface> = (props) => {
+         props.user.video ? (
+           <LocalView
+             style={{...styles.fullView, ...(maxViewStyles as object)}}
+-            renderMode={VideoRenderMode.Fit}
++            renderMode={styleProps?.videoMode?.max}
+           />
+         ) : Fallback ? (
+-          <Fallback />
++          <Fallback user={props.user} type="MAX" />
+         ) : (
+           <DefaultFallback />
+         )
+@@ -39,10 +38,10 @@ const MaxVideoView: React.FC<MaxViewInterface> = (props) => {
+         <RemoteView
+           style={{...styles.fullView, ...(maxViewStyles as object)}}
+           uid={props.user.uid as number}
+-          renderMode={VideoRenderMode.Fit}
++          renderMode={styleProps?.videoMode?.max}
+         />
+       ) : Fallback ? (
+-        <Fallback />
++        <Fallback user={props.user} type="MAX" />
+       ) : (
+         <DefaultFallback />
+       )}
+diff --git a/src/Views/MaxVideoView.tsx b/src/Views/MaxVideoView.tsx
+deleted file mode 100644
+index 938d555..0000000
+--- a/src/Views/MaxVideoView.tsx
++++ /dev/null
+@@ -1,55 +0,0 @@
+-import React, {useContext} from 'react';
+-import {RtcLocalView, RtcRemoteView, VideoRenderMode} from 'react-native-agora';
+-import styles from '../Style';
+-import PropsContext, {UidInterface} from '../Contexts/PropsContext';
+-import {View} from 'react-native';
+-
+-const LocalView = RtcLocalView.SurfaceView;
+-const RemoteView = RtcRemoteView.SurfaceView;
+-
+-interface MaxViewInterface {
+-  user: UidInterface;
+-  fallback?: React.ComponentType;
+-}
+-
+-const MaxVideoView: React.FC<MaxViewInterface> = (props) => {
+-  const {styleProps} = useContext(PropsContext);
+-  const {maxViewStyles} = styleProps || {};
+-  const Fallback = props.fallback;
+-
+-  return props.user.uid === 'local' ? (
+-    props.user.video ? (
+-      <LocalView
+-        style={{...styles.fullView, ...(maxViewStyles as object)}}
+-        renderMode={VideoRenderMode.Fit}
+-      />
+-    ) : Fallback ? (
+-      <Fallback />
+-    ) : (
+-      <View style={{flex: 1, backgroundColor: '#000'}} />
+-    )
+-  ) : (
+-    <>
+-      <div style={{flex: 1, display: props.user.video ? 'flex' : 'none'}}>
+-        <RemoteView
+-          style={{...styles.fullView, ...(maxViewStyles as object)}}
+-          uid={props.user.uid as number}
+-          renderMode={VideoRenderMode.Fit}
+-        />
+-      </div>
+-      {props.user.video ? (
+-        <></>
+-      ) : (
+-        <>
+-          {Fallback ? (
+-            <Fallback />
+-          ) : (
+-            <View style={{flex: 1, backgroundColor: '#000'}} />
+-          )}
+-        </>
+-      )}
+-    </>
+-  );
+-};
+-
+-export default MaxVideoView;
+diff --git a/src/Views/MinVideoView.tsx b/src/Views/MinVideoView.tsx
+index 41c3503..2ae6214 100644
+--- a/src/Views/MinVideoView.tsx
++++ b/src/Views/MinVideoView.tsx
+@@ -15,7 +15,7 @@ interface MinViewInterface {
+   user: UidInterface;
+   color?: string;
+   showOverlay?: boolean;
+-  Fallback?: React.ComponentType;
++  Fallback?: React.ComponentType<{user: UidInterface}>;
+ }
+ 
+ const MinVideoView: React.FC<MinViewInterface> = (props) => {
+@@ -29,7 +29,7 @@ const MinVideoView: React.FC<MinViewInterface> = (props) => {
+     <View style={{margin: 5}}>
+       {showOverlay ? (
+         <TouchableOpacity onPress={() => setOverlay(true)}>
+-          <UserVideoWithFallback user={props.user} Fallback={props.Fallback} />
++          <UserVideoWithFallback user={props.user} />
+         </TouchableOpacity>
+       ) : (
+         <UserVideoWithFallback user={props.user} />
+@@ -63,16 +63,17 @@ const MinVideoView: React.FC<MinViewInterface> = (props) => {
+ 
+ const UserVideoWithFallback = (props: {
+   user: UidInterface;
+-  Fallback?: React.ComponentType;
+ }) => {
+-  const {Fallback, user} = props;
+-  const {styleProps} = useContext(PropsContext);
++  const {user} = props;
++  const {styleProps, fallback} = useContext(PropsContext);
+   const {videoPlaceholderContainer, videoPlaceholderIcon} = styleProps || {};
+ 
++  const Fallback = fallback;
++
+   return user.video ? (
+     <UserVideo user={user} />
+   ) : Fallback ? (
+-    <Fallback />
++    <Fallback user={user} type="MIN" />
+   ) : (
+     <View style={[styles.minViewFallback, videoPlaceholderContainer]}>
+       <ImageIcon
+diff --git a/src/Views/PinnedVideo.tsx b/src/Views/PinnedVideo.tsx
+index d8f416f..2f51ef8 100644
+--- a/src/Views/PinnedVideo.tsx
++++ b/src/Views/PinnedVideo.tsx
+@@ -1,6 +1,6 @@
+ import React, {useContext, useEffect, useState} from 'react';
+ import {Dimensions, ScrollView} from 'react-native';
+-import MaxVideoView from './MaxVideoView';
++import MaxVideoView from './MaxVideoView.native';
+ import MinVideoView from './MinVideoView';
+ import {MinUidConsumer} from '../Contexts/MinUidContext';
+ import {MaxUidConsumer} from '../Contexts/MaxUidContext';

@@ -15,7 +15,7 @@ interface MinViewInterface {
   user: UidInterface;
   color?: string;
   showOverlay?: boolean;
-  Fallback?: React.ComponentType;
+  Fallback?: React.ComponentType<{user: UidInterface}>;
 }
 
 const MinVideoView: React.FC<MinViewInterface> = (props) => {
@@ -29,7 +29,7 @@ const MinVideoView: React.FC<MinViewInterface> = (props) => {
     <View style={{margin: 5}}>
       {showOverlay ? (
         <TouchableOpacity onPress={() => setOverlay(true)}>
-          <UserVideoWithFallback user={props.user} Fallback={props.Fallback} />
+          <UserVideoWithFallback user={props.user} />
         </TouchableOpacity>
       ) : (
         <UserVideoWithFallback user={props.user} />
@@ -63,16 +63,17 @@ const MinVideoView: React.FC<MinViewInterface> = (props) => {
 
 const UserVideoWithFallback = (props: {
   user: UidInterface;
-  Fallback?: React.ComponentType;
 }) => {
-  const {Fallback, user} = props;
-  const {styleProps} = useContext(PropsContext);
+  const {user} = props;
+  const {styleProps, fallback} = useContext(PropsContext);
   const {videoPlaceholderContainer, videoPlaceholderIcon} = styleProps || {};
+
+  const Fallback = fallback;
 
   return user.video ? (
     <UserVideo user={user} />
   ) : Fallback ? (
-    <Fallback />
+    <Fallback user={user} type="MIN" />
   ) : (
     <View style={[styles.minViewFallback, videoPlaceholderContainer]}>
       <ImageIcon

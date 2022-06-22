@@ -1,3 +1,5 @@
+import { Dimensions } from "react-native";
+
 const quality = {
   '120p_1': {
     dimensions: {
@@ -239,6 +241,14 @@ const quality = {
     frameRate: 30,
     bitRate: 1380,
   },
+  'dynamic': {
+    dimensions: {
+      width: Dimensions.get('screen').width,
+      height: Dimensions.get('screen').height,
+    },
+    frameRate: 30,
+    bitRate: 1380,
+  }
 };
 
 export default quality;

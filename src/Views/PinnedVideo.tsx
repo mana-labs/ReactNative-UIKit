@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Dimensions, ScrollView} from 'react-native';
-import MaxVideoView from './MaxVideoView';
+import MaxVideoView from './MaxVideoView.native';
 import MinVideoView from './MinVideoView';
 import {MinUidConsumer} from '../Contexts/MinUidContext';
 import {MaxUidConsumer} from '../Contexts/MaxUidContext';

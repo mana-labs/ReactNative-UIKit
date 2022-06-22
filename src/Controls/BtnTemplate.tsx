@@ -71,15 +71,6 @@ const BtnTemplate: React.FC<BtnTemplateInterface> = (props) => {
           }}
         />
       </View>
-      <Text
-        style={{
-          textAlign: 'center',
-          marginTop: 5,
-          color: disabled ? 'grey' : props.color || theme || '#fff',
-          opacity: disabled ? 0.4 : 1,
-        }}>
-        {props.btnText}
-      </Text>
     </TouchableOpacity>
   );
 };
