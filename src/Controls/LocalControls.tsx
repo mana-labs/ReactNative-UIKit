@@ -16,9 +16,12 @@ interface ControlsPropsInterface {
 }
 
 function Controls(props: ControlsPropsInterface) {
-  const {styleProps, rtcProps} = useContext(PropsContext);
+  const {styleProps, rtcProps, additionalProps} = useContext(PropsContext);
   const {localBtnContainer} = styleProps || {};
   const showButton = props.showButton !== undefined ? props.showButton : true;
+
+  const showMenu = additionalProps.onMenuPressed !== undefined;
+
   return (
     <>
       <View style={{...styles.Controls, ...(localBtnContainer as object)}}>
@@ -28,10 +31,15 @@ function Controls(props: ControlsPropsInterface) {
             <LocalVideoMute />
             <SwitchCamera />
             <ChatButton />
-            <MenuButton />
           </>
         )}
-        {/* <EndCall /> */}
+        {
+          showMenu ? (
+            <MenuButton />
+          ) : (
+            <EndCall />
+          )
+        }
       </View>
       {showButton ? (
         <MaxUidConsumer>
