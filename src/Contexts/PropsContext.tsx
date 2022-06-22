@@ -106,6 +106,8 @@ interface localBtnStylesInterface {
    * Style for the end call button
    */
   endCall?: StyleProp<ViewStyle>;
+  chat?: StyleProp<ViewStyle>;
+  menu?: StyleProp<ViewStyle>;
 }
 
 /**

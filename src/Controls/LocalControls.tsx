@@ -31,7 +31,7 @@ function Controls(props: ControlsPropsInterface) {
             <MenuButton />
           </>
         )}
-        <EndCall />
+        {/* <EndCall /> */}
       </View>
       {showButton ? (
         <MaxUidConsumer>
