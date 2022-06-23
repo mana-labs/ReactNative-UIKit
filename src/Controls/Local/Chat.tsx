@@ -7,7 +7,7 @@ function ChatButton() {
   const {styleProps, additionalProps} = useContext(PropsContext);
   const {localBtnStyles} = styleProps || {};
   const {chat} = localBtnStyles || {};
-  const {onChatPressed, isChatOpen} = additionalProps;
+  const {onChatPressed, isChatOpen} = additionalProps || {};
 
   return (
     <BtnTemplate

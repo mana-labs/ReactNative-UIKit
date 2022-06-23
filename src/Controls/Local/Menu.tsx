@@ -7,7 +7,7 @@ function MenuButton() {
   const {styleProps, additionalProps} = useContext(PropsContext);
   const {localBtnStyles} = styleProps || {};
   const {menu} = localBtnStyles || {};
-  const {onMenuPressed, isMenuOpen} = additionalProps;
+  const {onMenuPressed, isMenuOpen} = additionalProps || {};
 
   return (
     <BtnTemplate

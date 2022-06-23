@@ -16,7 +16,7 @@ interface ControlsPropsInterface {
 }
 
 function Controls(props: ControlsPropsInterface) {
-  const {styleProps, rtcProps, additionalProps} = useContext(PropsContext);
+  const {styleProps, rtcProps, additionalProps = {}} = useContext(PropsContext);
   const {localBtnContainer} = styleProps || {};
   const showButton = props.showButton !== undefined ? props.showButton : true;
 
