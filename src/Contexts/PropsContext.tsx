@@ -418,12 +418,14 @@ export interface AgoraUIKitProps {
   /* 
    * Additional props
    */
-  additionalProps: {
-    onChatPressed?: (isOpen: boolean) => void;
-    isChatOpen?: boolean;
-    onMenuPressed?: (isOpen: boolean) => void;
-    isMenuOpen?: boolean;
-  };
+  additionalProps: rtcAdditionalProps;
+}
+
+export type rtcAdditionalProps = {
+  onChatPressed?: (isOpen: boolean) => void;
+  isChatOpen?: boolean;
+  onMenuPressed?: (isOpen: boolean) => void;
+  isMenuOpen?: boolean;
 }
 
 export type rtcCallbacks = Partial<CallbacksInterface>;
@@ -434,6 +436,7 @@ export interface PropsInterface {
   callbacks?: Partial<CallbacksInterface>;
   rtmCallbacks?: rtmCallbacks;
   fallback?: React.ComponentType<{user: UidInterface, type: 'MIN' | 'MAX' }>;
+  additionalProps?: rtcAdditionalProps;
 }
 
 const initialValue: PropsInterface = {
