@@ -382,13 +382,6 @@ export interface ConnectionData
   rtmUid?: string;
 }
 
-export interface HeadingProps {
-  imageUrl: string;
-  title: string;
-  subheading: string;
-  onPress: () => {};
-}
-
 /**
  * Props to customize the Agora UIKit
  */
@@ -425,7 +418,7 @@ export interface AgoraUIKitProps {
   /**
    * Heading component
    */
-  heading: React.ComponentType<HeadingProps>;
+  heading: React.ComponentType;
   /* 
    * Additional props
    */
@@ -447,7 +440,7 @@ export interface PropsInterface {
   callbacks?: Partial<CallbacksInterface>;
   rtmCallbacks?: rtmCallbacks;
   fallback?: React.ComponentType<{user: UidInterface, type: 'MIN' | 'MAX' }>;
-  heading?: React.ComponentType<HeadingProps>;
+  heading?: React.ComponentType;
   additionalProps?: rtcAdditionalProps;
 }
 
