@@ -36,15 +36,15 @@ function Controls(props: ControlsPropsInterface) {
             <LocalVideoMute />
             <SwitchCamera />
             <ChatButton />
+            {
+              showMenu ? (
+                <MenuButton />
+              ) : (
+                <EndCall />
+              )
+            }
           </View>
         )}
-        {
-          showMenu ? (
-            <MenuButton />
-          ) : (
-            <EndCall />
-          )
-        }
       </View>
       {showButton ? (
         <MaxUidConsumer>
