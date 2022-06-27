@@ -22,6 +22,8 @@ function Controls(props: ControlsPropsInterface) {
 
   const showMenu = additionalProps.onMenuPressed !== undefined;
 
+  console.log('INSIDE LOCALCONTROLS', Heading, !!Heading);
+
   return (
     <>
       <View style={{...styles.Controls, ...(localBtnContainer as object)}}>
