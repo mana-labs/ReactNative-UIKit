@@ -4,6 +4,7 @@ import {RtcEngineEvents} from 'react-native-agora/lib/typescript/src/common/RtcE
 import {EncryptionMode, VideoRenderMode} from 'react-native-agora';
 import {VideoProfile} from '../Utils/quality';
 import {rtmCallbacks} from '../Contexts/RtmContext';
+import { HeadingProps } from 'src/Controls/Heading';
 
 export enum DualStreamMode {
   HIGH,
@@ -415,6 +416,10 @@ export interface AgoraUIKitProps {
    * Fallback component when no video is displayed
    */
   fallback: React.ComponentType<{user: UidInterface, type: 'MIN' | 'MAX'}>;
+  /**
+   * Heading component
+   */
+  heading: React.ComponentType<HeadingProps>;
   /* 
    * Additional props
    */
@@ -436,6 +441,7 @@ export interface PropsInterface {
   callbacks?: Partial<CallbacksInterface>;
   rtmCallbacks?: rtmCallbacks;
   fallback?: React.ComponentType<{user: UidInterface, type: 'MIN' | 'MAX' }>;
+  heading?: React.ComponentType<HeadingProps>;
   additionalProps?: rtcAdditionalProps;
 }
 
