@@ -17,7 +17,7 @@ interface ControlsPropsInterface {
 
 function Controls(props: ControlsPropsInterface) {
   const {styleProps, rtcProps, additionalProps = {}, heading: Heading} = useContext(PropsContext);
-  const {localBtnContainer} = styleProps || {};
+  const {localBtnContainer, localInnerBtnContainer} = styleProps || {};
   const showButton = props.showButton !== undefined ? props.showButton : true;
 
   const showMenu = additionalProps.onMenuPressed !== undefined;
@@ -31,7 +31,7 @@ function Controls(props: ControlsPropsInterface) {
           ) : null
         }
         {rtcProps.role !== ClientRole.Audience && (
-          <View style={styles.InnerControls}>
+          <View style={{...styles.InnerControls, ...(localInnerBtnContainer as object)}}>
             <LocalAudioMute />
             <LocalVideoMute />
             <SwitchCamera />

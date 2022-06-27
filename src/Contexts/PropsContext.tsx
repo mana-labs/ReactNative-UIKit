@@ -174,6 +174,10 @@ export interface StylePropInterface {
    */
   localBtnContainer?: StyleProp<ViewStyle>;
   /**
+   * Style for the local button container
+   */
+  localInnerBtnContainer?: StyleProp<ViewStyle>;
+  /**
    * Style for the button container that sets the mute and unmute for maxVideoView in pinned layout, only visible if max view is remote user
    */
   maxViewRemoteBtnContainer?: StyleProp<ViewStyle>;
