@@ -22,8 +22,6 @@ function Controls(props: ControlsPropsInterface) {
 
   const showMenu = additionalProps.onMenuPressed !== undefined;
 
-  console.log('INSIDE LOCALCONTROLS', Heading, !!Heading);
-
   return (
     <>
       <View style={{...styles.Controls, ...(localBtnContainer as object)}}>
@@ -33,7 +31,7 @@ function Controls(props: ControlsPropsInterface) {
           ) : null
         }
         {rtcProps.role !== ClientRole.Audience && (
-          <View>
+          <View style={styles.InnerControls}>
             <LocalAudioMute />
             <LocalVideoMute />
             <SwitchCamera />

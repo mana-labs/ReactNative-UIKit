@@ -55,6 +55,12 @@ export default StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center',
   },
+  InnerControls: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+  },
   minOverlay: {
     ...(StyleSheet.absoluteFill as object),
     backgroundColor: 'black',
