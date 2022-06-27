@@ -4,7 +4,6 @@ import {RtcEngineEvents} from 'react-native-agora/lib/typescript/src/common/RtcE
 import {EncryptionMode, VideoRenderMode} from 'react-native-agora';
 import {VideoProfile} from '../Utils/quality';
 import {rtmCallbacks} from '../Contexts/RtmContext';
-import { HeadingProps } from 'src/Controls/Heading';
 
 export enum DualStreamMode {
   HIGH,
@@ -381,6 +380,13 @@ export interface ConnectionData
   rtcUid?: number;
   rtmToken?: string;
   rtmUid?: string;
+}
+
+export interface HeadingProps {
+  imageUrl: string;
+  title: string;
+  subheading: string;
+  onPress: () => {};
 }
 
 /**
