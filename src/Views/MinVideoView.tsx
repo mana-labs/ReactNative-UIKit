@@ -29,7 +29,7 @@ const MinVideoView: React.FC<MinViewInterface> = (props: MinViewInterface) => {
     if(customIcon && (typeof customIcon?.['micOff'] !== 'string') && (props.user.audio !== ToggleState.enabled)) {
       const MicOffIcon = customIcon?.['micOff'];
       if(MicOffIcon) {
-        return <MicOffIcon />;
+        return <View />;
       }
     }
     return <View />;
