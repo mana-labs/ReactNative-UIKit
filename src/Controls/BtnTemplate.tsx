@@ -45,7 +45,7 @@ const BtnTemplate: React.FC<BtnTemplateInterface> = (props) => {
 
   const Icon = useMemo(() => {
     console.log('CustomIcon', props.name, customIcon)
-    if(props.name && customIcon) {
+    if(props.name && customIcon && (typeof props.name !== 'string')) {
       // && React.isValidElement(customIcon?.[props.name])
       const Test = customIcon?.[props.name];
       if(Test && React.isValidElement(<Test />)) {
