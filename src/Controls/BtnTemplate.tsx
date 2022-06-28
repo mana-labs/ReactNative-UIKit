@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useMemo} from 'react';
 import {
   TouchableOpacity,
   Image,
@@ -43,6 +43,13 @@ const BtnTemplate: React.FC<BtnTemplateInterface> = (props) => {
   // This fixes the tint issue in safari browser
   useImageDelay(imageRef, 10, '', props?.color || '');
 
+  const CustomIcon = useMemo(() => {
+    if(React.isValidElement(customIcon?.[props.name])) {
+      return customIcon?.[props.name];
+    }
+    return null;
+  }, [props.name]);
+
   return (
     <TouchableOpacity
       style={styleProps?.BtnTemplateContainer}
@@ -53,23 +60,29 @@ const BtnTemplate: React.FC<BtnTemplateInterface> = (props) => {
           {...styles.controlBtn, ...(BtnTemplateStyles as object)},
           props.style as object,
         ]}>
-        <Image
-          ref={Platform.OS === 'web' ? imageRef : undefined}
-          style={{
-            width: iconSize || 25,
-            height: iconSize || 25,
-            opacity: disabled ? 0.4 : 1,
-            tintColor: disabled ? 'grey' : props.color || theme || '#fff',
-          }}
-          resizeMode={'contain'}
-          source={{
-            uri: props.name
-              ? customIcon?.[props.name]
-                ? customIcon[props.name]
-                : icons[props.name]
-              : props.icon,
-          }}
-        />
+        {
+          CustomIcon ? (
+            <CustomIcon />
+          ) : (
+            <Image
+              ref={Platform.OS === 'web' ? imageRef : undefined}
+              style={{
+                width: iconSize || 25,
+                height: iconSize || 25,
+                opacity: disabled ? 0.4 : 1,
+                tintColor: disabled ? 'grey' : props.color || theme || '#fff',
+              }}
+              resizeMode={'contain'}
+              source={{
+                uri: props.name
+                  ? customIcon?.[props.name]
+                    ? customIcon[props.name]
+                    : icons[props.name]
+                  : props.icon,
+              }}
+            />
+          )
+        }
       </View>
     </TouchableOpacity>
   );

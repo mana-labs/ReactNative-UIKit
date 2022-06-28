@@ -462,7 +462,7 @@ export interface IconsInterface {
   /**
    * Icon for Camera/Video mute in on state
    */
-  videocam: string;
+  videocam: string | React.ComponentType;
   /**
    * Icon for Camera/Video mute in off state
    */
