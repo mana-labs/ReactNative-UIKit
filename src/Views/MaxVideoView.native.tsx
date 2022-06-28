@@ -5,7 +5,7 @@ import PropsContext, {ToggleState, UidInterface} from '../Contexts/PropsContext'
 import {StyleSheet, View} from 'react-native';
 import ImageIcon from '../Controls/ImageIcon';
 import Username from './Usernames';
-import { BtnTemplate } from 'Components';
+import BtnTemplate from '../Controls/BtnTemplate';
 
 const LocalView = RtcLocalView.SurfaceView;
 const RemoteView = RtcRemoteView.SurfaceView;
@@ -28,7 +28,7 @@ const MaxVideoView: React.FC<MaxViewInterface> = (props: MaxViewInterface) => {
           name={'micOffRemote'}
           style={{
             ...styles.localBtn,
-            ...muteRemoteAudio,
+            ...(muteRemoteAudio as object),
           }}
           disabled
         />
