@@ -22,7 +22,7 @@ const MaxVideoView: React.FC<MaxViewInterface> = (props: MaxViewInterface) => {
   const {muteRemoteAudio} = localBtnStyles || {};
 
   const MuteIcon = useMemo(() => {
-    if(props.user.audio !== ToggleState.enabled) {
+    if(props.user.audio !== ToggleState.enabled && props.user.uid !== 'local') {
       return (
         <BtnTemplate
           name={'micOffRemote'}
