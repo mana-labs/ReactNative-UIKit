@@ -43,16 +43,13 @@ const BtnTemplate: React.FC<BtnTemplateInterface> = (props) => {
   // This fixes the tint issue in safari browser
   useImageDelay(imageRef, 10, '', props?.color || '');
 
+  // Usually expect a base64 string for the icon, but we prefer to pass in icon components
   const Icon = useMemo(() => {
-    console.log('CustomIcon', props.name, customIcon)
     if(props.name && customIcon && (typeof customIcon?.[props.name] !== 'string')) {
-      // && React.isValidElement(customIcon?.[props.name])
-      const Test = customIcon?.[props.name];
-      if(Test) {
-        // console.log('CustomIcon2', React.isValidElement(<Test />))
-        return <Test />;
+      const CustomIcon = customIcon?.[props.name];
+      if(CustomIcon) {
+        return <CustomIcon />;
       }
-      // console.log('CustomIcon2', React.isValidElement(<Test />))
     }
     return (
       <Image

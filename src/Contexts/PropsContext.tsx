@@ -466,39 +466,39 @@ export interface IconsInterface {
   /**
    * Icon for Camera/Video mute in off state
    */
-  videocamOff: string;
+  videocamOff: string | React.ComponentType;
   /**
    * Icon for Mic/Audio mute in on state
    */
-  mic: string;
+  mic: string | React.ComponentType;
   /**
    * Icon for Mic/Audio mute in off state
    */
-  micOff: string;
+  micOff: string | React.ComponentType;
   /**
    * Icon to switch between device cameras
    */
-  switchCamera: string;
+  switchCamera: string | React.ComponentType;
   /**
    * Icon to end the call
    */
-  callEnd: string;
+  callEnd: string | React.ComponentType;
   /**
    * Icon to swap the min user to max view
    */
-  remoteSwap: string;
+  remoteSwap: string | React.ComponentType;
   /**
    * Icon to close the overlay in floating layout
    */
-  close: string;
+  close: string | React.ComponentType;
   /**
    * Icon for chat
    */
-  chat: string;
+  chat: string | React.ComponentType;
   /**
    * Icon for menu
    */
-  menu: string;
+  menu: string | React.ComponentType;
 }
 
 const PropsContext = React.createContext<PropsInterface>(initialValue);
