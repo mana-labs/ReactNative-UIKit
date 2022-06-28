@@ -26,7 +26,7 @@ const MinVideoView: React.FC<MinViewInterface> = (props: MinViewInterface) => {
   const {showOverlay} = props || {};
 
   const MuteIcon = useMemo(() => {
-    if(customIcon && (typeof customIcon?.['micOff'] !== 'string') && props.user.audio !== ToggleState.enabled) {
+    if(customIcon && (typeof customIcon?.['micOff'] !== 'string') && (props.user.audio !== ToggleState.enabled)) {
       const MicOffIcon = customIcon?.['micOff'];
       if(MicOffIcon) {
         return <MicOffIcon />;
@@ -36,7 +36,7 @@ const MinVideoView: React.FC<MinViewInterface> = (props: MinViewInterface) => {
   }, [props.user.audio]);
 
   return (
-    <View style={{margin: 5}}>
+    <View style={{margin: 5, marginTop: 15}}>
       {showOverlay ? (
         <TouchableOpacity onPress={() => setOverlay(true)}>
           <UserVideoWithFallback user={props.user} />
@@ -57,7 +57,7 @@ const MinVideoView: React.FC<MinViewInterface> = (props: MinViewInterface) => {
                 tintColor: theme || props.color || '#fff',
               }}
               source={{
-                uri: customIcon?.close ? customIcon.close : icons.close,
+                uri: customIcon?.close ? (customIcon.close as string) : icons.close,
               }}
             />
           </TouchableOpacity>
@@ -65,7 +65,7 @@ const MinVideoView: React.FC<MinViewInterface> = (props: MinViewInterface) => {
         </View>
       ) : (
         <View style={styles.minMuteContainer}>
-          {/* <MuteIcon /> */}
+          <MuteIcon />
         </View>
       )}
       {!rtcProps.disableRtm && <Username user={props.user} />}
