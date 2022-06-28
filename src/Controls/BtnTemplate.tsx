@@ -50,7 +50,7 @@ const BtnTemplate: React.FC<BtnTemplateInterface> = (props) => {
       const Test = customIcon?.[props.name];
       if(Test) {
         // console.log('CustomIcon2', React.isValidElement(<Test />))
-        return customIcon?.[props.name];
+        return <Test />;
       }
       // console.log('CustomIcon2', React.isValidElement(<Test />))
     }
@@ -66,7 +66,7 @@ const BtnTemplate: React.FC<BtnTemplateInterface> = (props) => {
         resizeMode={'contain'}
         source={{
           uri: props.name
-            ? (customIcon?.[props.name] && typeof customIcon?.[props.name] === 'string')
+            ? (customIcon?.[props.name] && (typeof customIcon?.[props.name] === 'string'))
               ? customIcon[props.name]
               : icons[props.name]
             : props.icon,
@@ -85,7 +85,7 @@ const BtnTemplate: React.FC<BtnTemplateInterface> = (props) => {
           {...styles.controlBtn, ...(BtnTemplateStyles as object)},
           props.style as object,
         ]}>
-        <Icon />
+        {Icon}
       </View>
     </TouchableOpacity>
   );
