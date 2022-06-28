@@ -43,17 +43,36 @@ const BtnTemplate: React.FC<BtnTemplateInterface> = (props) => {
   // This fixes the tint issue in safari browser
   useImageDelay(imageRef, 10, '', props?.color || '');
 
-  const CustomIcon = useMemo(() => {
+  const Icon = useMemo(() => {
     console.log('CustomIcon', props.name, customIcon)
     if(props.name && customIcon) {
       // && React.isValidElement(customIcon?.[props.name])
       const Test = customIcon?.[props.name];
       if(React.isValidElement(<Test />)) {
+        console.log('CustomIcon2', React.isValidElement(<Test />))
         return customIcon?.[props.name];
       }
       console.log('CustomIcon2', React.isValidElement(<Test />))
     }
-    return null;
+    return (
+      <Image
+        ref={Platform.OS === 'web' ? imageRef : undefined}
+        style={{
+          width: iconSize || 25,
+          height: iconSize || 25,
+          opacity: disabled ? 0.4 : 1,
+          tintColor: disabled ? 'grey' : props.color || theme || '#fff',
+        }}
+        resizeMode={'contain'}
+        source={{
+          uri: props.name
+            ? customIcon?.[props.name]
+              ? customIcon[props.name]
+              : icons[props.name]
+            : props.icon,
+        }}
+      />
+    );
   }, [props.name]);
 
   return (
@@ -66,29 +85,7 @@ const BtnTemplate: React.FC<BtnTemplateInterface> = (props) => {
           {...styles.controlBtn, ...(BtnTemplateStyles as object)},
           props.style as object,
         ]}>
-        {
-          CustomIcon ? (
-            <CustomIcon />
-          ) : (
-            <Image
-              ref={Platform.OS === 'web' ? imageRef : undefined}
-              style={{
-                width: iconSize || 25,
-                height: iconSize || 25,
-                opacity: disabled ? 0.4 : 1,
-                tintColor: disabled ? 'grey' : props.color || theme || '#fff',
-              }}
-              resizeMode={'contain'}
-              source={{
-                uri: props.name
-                  ? customIcon?.[props.name]
-                    ? customIcon[props.name]
-                    : icons[props.name]
-                  : props.icon,
-              }}
-            />
-          )
-        }
+        <Icon />
       </View>
     </TouchableOpacity>
   );
