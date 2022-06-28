@@ -47,7 +47,6 @@ const MinVideoView: React.FC<MinViewInterface> = (props: MinViewInterface) => {
 
       {overlay && showOverlay ? (
         <View style={styles.minOverlay}>
-          <MuteIcon />
           <TouchableOpacity
             style={{...styles.minCloseBtn, ...(minCloseBtnStyles as object)}}
             onPress={() => setOverlay(!overlay)}>
@@ -65,7 +64,9 @@ const MinVideoView: React.FC<MinViewInterface> = (props: MinViewInterface) => {
           <RemoteControls showRemoteSwap={true} user={props.user} />
         </View>
       ) : (
-        <></>
+        <View style={styles.minMuteContainer}>
+          <MuteIcon />
+        </View>
       )}
       {!rtcProps.disableRtm && <Username user={props.user} />}
     </View>

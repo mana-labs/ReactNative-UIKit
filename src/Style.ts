@@ -68,6 +68,11 @@ export default StyleSheet.create({
     zIndex: 2,
     height: '100%',
   },
+  minMuteContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
   minCloseBtn: {
     alignItems: 'center',
     justifyContent: 'center',
