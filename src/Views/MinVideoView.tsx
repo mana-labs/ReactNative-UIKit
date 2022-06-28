@@ -65,7 +65,7 @@ const MinVideoView: React.FC<MinViewInterface> = (props: MinViewInterface) => {
         </View>
       ) : (
         <View style={styles.minMuteContainer}>
-          <MuteIcon />
+          {/* <MuteIcon /> */}
         </View>
       )}
       {!rtcProps.disableRtm && <Username user={props.user} />}
