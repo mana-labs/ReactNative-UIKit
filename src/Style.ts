@@ -69,6 +69,9 @@ export default StyleSheet.create({
     height: '100%',
   },
   minMuteContainer: {
+    position: 'absolute',
+    top: 60,
+    right: 30,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-end',
