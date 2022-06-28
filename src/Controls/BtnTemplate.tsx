@@ -45,7 +45,7 @@ const BtnTemplate: React.FC<BtnTemplateInterface> = (props) => {
 
   const Icon = useMemo(() => {
     console.log('CustomIcon', props.name, customIcon)
-    if(props.name && customIcon && (typeof props.name !== 'string')) {
+    if(props.name && customIcon && (typeof customIcon?.[props.name] !== 'string')) {
       // && React.isValidElement(customIcon?.[props.name])
       const Test = customIcon?.[props.name];
       if(Test) {
@@ -66,7 +66,7 @@ const BtnTemplate: React.FC<BtnTemplateInterface> = (props) => {
         resizeMode={'contain'}
         source={{
           uri: props.name
-            ? customIcon?.[props.name]
+            ? (customIcon?.[props.name] && typeof customIcon?.[props.name] === 'string')
               ? customIcon[props.name]
               : icons[props.name]
             : props.icon,
