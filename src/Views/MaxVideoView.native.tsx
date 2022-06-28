@@ -5,6 +5,7 @@ import PropsContext, {ToggleState, UidInterface} from '../Contexts/PropsContext'
 import {StyleSheet, View} from 'react-native';
 import ImageIcon from '../Controls/ImageIcon';
 import Username from './Usernames';
+import { BtnTemplate } from 'Components';
 
 const LocalView = RtcLocalView.SurfaceView;
 const RemoteView = RtcRemoteView.SurfaceView;
@@ -17,20 +18,25 @@ interface MaxViewInterface {
  */
 const MaxVideoView: React.FC<MaxViewInterface> = (props: MaxViewInterface) => {
   const {styleProps, rtcProps, fallback: Fallback} = useContext(PropsContext);
-  const {maxViewStyles} = styleProps || {};
-  const {remoteBtnStyles, customIcon} = styleProps || {};
+  const {maxViewStyles, maxViewMicMuteStyles, localBtnStyles} = styleProps || {};
+  const {muteRemoteAudio} = localBtnStyles || {};
 
   const MuteIcon = useMemo(() => {
-    if(customIcon && (typeof customIcon?.['micOff'] !== 'string') && (props.user.audio !== ToggleState.enabled)) {
-      const MicOffIcon = customIcon?.['micOff'];
-      if(MicOffIcon) {
-        return <MicOffIcon />;
-      }
+    if(props.user.audio !== ToggleState.enabled) {
+      return (
+        <BtnTemplate
+          name={'micOffRemote'}
+          style={{
+            ...styles.localBtn,
+            ...muteRemoteAudio,
+          }}
+          disabled
+        />
+      );
     }
     return null;
   }, [props.user.audio]);
 
-  console.log('Max Video', props.user.uid, props.user.video)
   return (
     <React.Fragment>
       {!rtcProps.disableRtm && <Username user={props.user} />}
@@ -46,21 +52,19 @@ const MaxVideoView: React.FC<MaxViewInterface> = (props: MaxViewInterface) => {
           <DefaultFallback />
         )
       ) : props.user.video ? (
-        <View>
-          <RemoteView
-            style={{...styles.fullView, ...(maxViewStyles as object)}}
-            uid={props.user.uid as number}
-            renderMode={styleProps?.videoMode?.max}
-          />
-          <View style={styles.minMuteContainer}>
-            {MuteIcon}
-          </View>
-        </View>
+        <RemoteView
+          style={{...styles.fullView, ...(maxViewStyles as object)}}
+          uid={props.user.uid as number}
+          renderMode={styleProps?.videoMode?.max}
+        />
       ) : Fallback ? (
         <Fallback user={props.user} type="MAX" />
       ) : (
         <DefaultFallback />
       )}
+      <View style={[styles.minMuteContainer, maxViewMicMuteStyles]}>
+        {MuteIcon}
+      </View>
     </React.Fragment>
   );
 };

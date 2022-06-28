@@ -99,6 +99,10 @@ interface localBtnStylesInterface {
    */
   muteLocalVideo?: StyleProp<ViewStyle>;
   /**
+   * Style for the remote mute audio button
+   */
+  muteRemoteAudio?: StyleProp<ViewStyle>;
+  /**
    * Style for the switch camera button
    */
   switchCamera?: StyleProp<ViewStyle>;
@@ -145,6 +149,10 @@ export interface StylePropInterface {
    * Style for the big view in pinned layout
    */
   maxViewStyles?: StyleProp<ViewStyle>;
+  /**
+   * Style for the big view in pinned layout
+   */
+  maxViewMicMuteStyles?: StyleProp<ViewStyle>;
   /**
    * Style for the small view in pinned layout
    */
@@ -475,6 +483,10 @@ export interface IconsInterface {
    * Icon for Mic/Audio mute in off state
    */
   micOff: string | React.ComponentType;
+  /**
+   * Icon for Mic/Audio mute in off state
+   */
+  micOffRemote: string | React.ComponentType;
   /**
    * Icon to switch between device cameras
    */
