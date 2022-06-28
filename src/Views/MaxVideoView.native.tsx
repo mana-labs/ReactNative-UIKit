@@ -1,7 +1,7 @@
-import React, {useContext} from 'react';
+import React, {useContext, useMemo} from 'react';
 import {RtcLocalView, RtcRemoteView, VideoRenderMode} from 'react-native-agora';
 import styles from '../Style';
-import PropsContext, {UidInterface} from '../Contexts/PropsContext';
+import PropsContext, {ToggleState, UidInterface} from '../Contexts/PropsContext';
 import {StyleSheet, View} from 'react-native';
 import ImageIcon from '../Controls/ImageIcon';
 import Username from './Usernames';
@@ -18,6 +18,7 @@ interface MaxViewInterface {
 const MaxVideoView: React.FC<MaxViewInterface> = (props: MaxViewInterface) => {
   const {styleProps, rtcProps, fallback: Fallback} = useContext(PropsContext);
   const {maxViewStyles} = styleProps || {};
+  const {remoteBtnStyles, customIcon} = styleProps || {};
 
   const MuteIcon = useMemo(() => {
     if(customIcon && (typeof customIcon?.['micOff'] !== 'string') && (props.user.audio !== ToggleState.enabled)) {
