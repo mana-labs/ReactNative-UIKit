@@ -30,6 +30,7 @@ const MaxVideoView: React.FC<MaxViewInterface> = (props: MaxViewInterface) => {
     return null;
   }, [props.user.audio]);
 
+  console.log('Max Video', props.user.uid, props.user.video)
   return (
     <React.Fragment>
       {!rtcProps.disableRtm && <Username user={props.user} />}
