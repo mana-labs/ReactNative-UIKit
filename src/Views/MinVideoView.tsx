@@ -32,7 +32,7 @@ const MinVideoView: React.FC<MinViewInterface> = (props: MinViewInterface) => {
         return <MicOffIcon />;
       }
     }
-    return <></>;
+    return <View />;
   }, [props.user.audio]);
 
   return (
