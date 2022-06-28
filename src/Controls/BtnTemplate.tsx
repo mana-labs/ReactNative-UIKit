@@ -44,9 +44,14 @@ const BtnTemplate: React.FC<BtnTemplateInterface> = (props) => {
   useImageDelay(imageRef, 10, '', props?.color || '');
 
   const CustomIcon = useMemo(() => {
-    console.log('CustomIcon', props.name, customIcon, React.isValidElement(customIcon?.[props.name]))
-    if(props.name && customIcon && React.isValidElement(customIcon?.[props.name])) {
-      return customIcon?.[props.name];
+    console.log('CustomIcon', props.name, customIcon)
+    if(props.name && customIcon) {
+      // && React.isValidElement(customIcon?.[props.name])
+      const Test = customIcon?.[props.name];
+      if(React.isValidElement(<Test />)) {
+        return customIcon?.[props.name];
+      }
+      console.log('CustomIcon2', React.isValidElement(<Test />))
     }
     return null;
   }, [props.name]);
