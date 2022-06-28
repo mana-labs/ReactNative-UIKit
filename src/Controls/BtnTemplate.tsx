@@ -48,11 +48,11 @@ const BtnTemplate: React.FC<BtnTemplateInterface> = (props) => {
     if(props.name && customIcon && (typeof props.name !== 'string')) {
       // && React.isValidElement(customIcon?.[props.name])
       const Test = customIcon?.[props.name];
-      if(Test && React.isValidElement(<Test />)) {
-        console.log('CustomIcon2', React.isValidElement(<Test />))
+      if(Test) {
+        // console.log('CustomIcon2', React.isValidElement(<Test />))
         return customIcon?.[props.name];
       }
-      console.log('CustomIcon2', React.isValidElement(<Test />))
+      // console.log('CustomIcon2', React.isValidElement(<Test />))
     }
     return (
       <Image
