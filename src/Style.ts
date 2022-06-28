@@ -72,6 +72,9 @@ export default StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-end',
+    alignItems: 'center',
+    borderColor: 'red',
+    borderWidth: '3',
   },
   minCloseBtn: {
     alignItems: 'center',

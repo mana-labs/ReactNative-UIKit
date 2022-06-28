@@ -15,9 +15,19 @@ interface MaxViewInterface {
 /**
  * MaxVideoView takes in a user and renders the video
  */
-const MaxVideoView: React.FC<MaxViewInterface> = (props) => {
+const MaxVideoView: React.FC<MaxViewInterface> = (props: MaxViewInterface) => {
   const {styleProps, rtcProps, fallback: Fallback} = useContext(PropsContext);
   const {maxViewStyles} = styleProps || {};
+
+  const MuteIcon = useMemo(() => {
+    if(customIcon && (typeof customIcon?.['micOff'] !== 'string') && (props.user.audio !== ToggleState.enabled)) {
+      const MicOffIcon = customIcon?.['micOff'];
+      if(MicOffIcon) {
+        return <MicOffIcon />;
+      }
+    }
+    return null;
+  }, [props.user.audio]);
 
   return (
     <React.Fragment>
@@ -34,11 +44,16 @@ const MaxVideoView: React.FC<MaxViewInterface> = (props) => {
           <DefaultFallback />
         )
       ) : props.user.video ? (
-        <RemoteView
-          style={{...styles.fullView, ...(maxViewStyles as object)}}
-          uid={props.user.uid as number}
-          renderMode={styleProps?.videoMode?.max}
-        />
+        <View>
+          <RemoteView
+            style={{...styles.fullView, ...(maxViewStyles as object)}}
+            uid={props.user.uid as number}
+            renderMode={styleProps?.videoMode?.max}
+          />
+          <View style={styles.minMuteContainer}>
+            {MuteIcon}
+          </View>
+        </View>
       ) : Fallback ? (
         <Fallback user={props.user} type="MAX" />
       ) : (

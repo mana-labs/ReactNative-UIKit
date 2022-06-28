@@ -1,10 +1,10 @@
-import React, {useState, useContext, useMemo} from 'react';
+import React, {useState, useContext} from 'react';
 import {View, TouchableOpacity, Image} from 'react-native';
 import {RtcLocalView, RtcRemoteView, VideoRenderMode} from 'react-native-agora';
 import styles from '../Style';
 import icons from '../Controls/Icons';
 import RemoteControls from '../Controls/RemoteControls';
-import PropsContext, {ToggleState, UidInterface} from '../Contexts/PropsContext';
+import PropsContext, {UidInterface} from '../Contexts/PropsContext';
 import ImageIcon from '../Controls/ImageIcon';
 import Username from './Usernames';
 
@@ -25,18 +25,8 @@ const MinVideoView: React.FC<MinViewInterface> = (props: MinViewInterface) => {
   const {minCloseBtnStyles} = remoteBtnStyles || {};
   const {showOverlay} = props || {};
 
-  const MuteIcon = useMemo(() => {
-    if(customIcon && (typeof customIcon?.['micOff'] !== 'string') && (props.user.audio !== ToggleState.enabled)) {
-      const MicOffIcon = customIcon?.['micOff'];
-      if(MicOffIcon) {
-        return <MicOffIcon />;
-      }
-    }
-    return <View />;
-  }, [props.user.audio]);
-
   return (
-    <View style={{margin: 5, marginTop: 15}}>
+    <View style={{margin: 5}}>
       {showOverlay ? (
         <TouchableOpacity onPress={() => setOverlay(true)}>
           <UserVideoWithFallback user={props.user} />
@@ -64,9 +54,7 @@ const MinVideoView: React.FC<MinViewInterface> = (props: MinViewInterface) => {
           <RemoteControls showRemoteSwap={true} user={props.user} />
         </View>
       ) : (
-        <View style={styles.minMuteContainer}>
-          {MuteIcon}
-        </View>
+        <></>
       )}
       {!rtcProps.disableRtm && <Username user={props.user} />}
     </View>
