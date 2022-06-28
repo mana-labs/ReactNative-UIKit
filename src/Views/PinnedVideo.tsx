@@ -5,7 +5,7 @@ import MinVideoView from './MinVideoView';
 import {MinUidConsumer} from '../Contexts/MinUidContext';
 import {MaxUidConsumer} from '../Contexts/MaxUidContext';
 import styles from '../Style';
-import PropsContext, {ClientRole} from '../Contexts/PropsContext';
+import PropsContext, {ClientRole, UidInterface} from '../Contexts/PropsContext';
 
 const PinnedVideo: React.FC = () => {
   const {rtcProps, styleProps} = useContext(PropsContext);
@@ -36,7 +36,7 @@ const PinnedVideo: React.FC = () => {
         }}>
         <MinUidConsumer>
           {(minUsers) =>
-            minUsers.map((user) =>
+            minUsers.map((user: UidInterface) =>
               rtcProps.role === ClientRole.Audience &&
               user.uid === 'local' ? null : (
                 <MinVideoView user={user} key={user.uid} showOverlay={true} />

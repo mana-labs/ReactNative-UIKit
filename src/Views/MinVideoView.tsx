@@ -1,10 +1,10 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useMemo} from 'react';
 import {View, TouchableOpacity, Image} from 'react-native';
 import {RtcLocalView, RtcRemoteView, VideoRenderMode} from 'react-native-agora';
 import styles from '../Style';
 import icons from '../Controls/Icons';
 import RemoteControls from '../Controls/RemoteControls';
-import PropsContext, {UidInterface} from '../Contexts/PropsContext';
+import PropsContext, {ToggleState, UidInterface} from '../Contexts/PropsContext';
 import ImageIcon from '../Controls/ImageIcon';
 import Username from './Usernames';
 
@@ -18,12 +18,22 @@ interface MinViewInterface {
   Fallback?: React.ComponentType<{user: UidInterface}>;
 }
 
-const MinVideoView: React.FC<MinViewInterface> = (props) => {
+const MinVideoView: React.FC<MinViewInterface> = (props: MinViewInterface) => {
   const [overlay, setOverlay] = useState(false);
   const {styleProps, rtcProps} = useContext(PropsContext);
   const {theme, remoteBtnStyles, customIcon} = styleProps || {};
   const {minCloseBtnStyles} = remoteBtnStyles || {};
   const {showOverlay} = props || {};
+
+  const MuteIcon = useMemo(() => {
+    if(customIcon && (typeof customIcon?.['micOff'] !== 'string') && props.user.audio !== ToggleState.enabled) {
+      const MicOffIcon = customIcon?.['micOff'];
+      if(MicOffIcon) {
+        return <MicOffIcon />;
+      }
+    }
+    return null;
+  }, [props.user.audio]);
 
   return (
     <View style={{margin: 5}}>
@@ -37,6 +47,7 @@ const MinVideoView: React.FC<MinViewInterface> = (props) => {
 
       {overlay && showOverlay ? (
         <View style={styles.minOverlay}>
+          <MuteIcon />
           <TouchableOpacity
             style={{...styles.minCloseBtn, ...(minCloseBtnStyles as object)}}
             onPress={() => setOverlay(!overlay)}>
