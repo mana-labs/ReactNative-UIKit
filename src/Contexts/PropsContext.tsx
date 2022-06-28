@@ -490,7 +490,7 @@ export interface IconsInterface {
   /**
    * Icon to close the overlay in floating layout
    */
-  close: string | React.ComponentType;
+  close: string; // Could be a component but we don't need it atm and there's TS errors to fix
   /**
    * Icon for chat
    */

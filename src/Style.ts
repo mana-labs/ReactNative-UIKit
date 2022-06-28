@@ -74,7 +74,7 @@ export default StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center',
     borderColor: 'red',
-    borderWidth: '3',
+    borderWidth: 3,
   },
   minCloseBtn: {
     alignItems: 'center',
