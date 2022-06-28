@@ -62,7 +62,7 @@ const MaxVideoView: React.FC<MaxViewInterface> = (props: MaxViewInterface) => {
       ) : (
         <DefaultFallback />
       )}
-      <View style={[styles.minMuteContainer, maxViewMicMuteStyles]}>
+      <View style={[styles.maxMuteContainer, maxViewMicMuteStyles]}>
         {MuteIcon}
       </View>
     </React.Fragment>

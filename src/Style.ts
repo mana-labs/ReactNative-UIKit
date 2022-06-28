@@ -68,16 +68,10 @@ export default StyleSheet.create({
     zIndex: 2,
     height: '100%',
   },
-  minMuteContainer: {
+  maxMuteContainer: {
     position: 'absolute',
-    top: 60,
-    right: 30,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    borderColor: 'red',
-    borderWidth: 3,
+    top: 100,
+    right: 20,
   },
   minCloseBtn: {
     alignItems: 'center',
