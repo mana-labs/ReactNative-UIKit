@@ -2,6 +2,7 @@ import React, {useState, useEffect, useContext, useRef} from 'react';
 import RtcEngine, {
   VideoEncoderConfiguration,
   AreaCode,
+  VideoOutputOrientationMode,
 } from 'react-native-agora';
 import {Platform} from 'react-native';
 import requestCameraAndAudioPermission from '../Utils/permission';
@@ -70,6 +71,7 @@ const Create = ({
             await engine.current.setVideoEncoderConfiguration({
               ...config,
               bitrate: 0,
+              orientationMode: VideoOutputOrientationMode.FixedPortrait
             });
           }
         }
