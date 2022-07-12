@@ -59,15 +59,15 @@ const GridVideo: React.FC = () => {
     () => layout(users.length, isDesktop),
     [users.length, isDesktop],
   );
-  console.log(`GridVideo: Users: ${users}`)
-  console.log(`GridVideo: Matrix: ${matrix}, Dims: ${dims}`)
+  console.log(`GridVideo: Users: ${JSON.stringify(users)}`)
+  console.log(`GridVideo: Matrix: ${matrix}, Dims: ${JSON.stringify(dims)}`)
   return (
     <View style={style.full} onLayout={onLayout}>
       {matrix.map((r, ridx) => (
         <View style={style.gridRow} key={ridx}>
           {r.map((c, cidx) => {
             console.log(`GridVideoColumn: cidx: ${cidx} ridx: ${ridx}`)
-            console.log(`GridVideoColumn: users[${ridx * dims.c + cidx}], user: ${users[ridx * dims.c + cidx]}`)
+            console.log(`GridVideoColumn: users[${ridx * dims.c + cidx}], user: ${JSON.stringify(users[ridx * dims.c + cidx])}`)
             return (
               <View style={style.col} key={cidx}>
                 <View
