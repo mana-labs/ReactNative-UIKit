@@ -34,6 +34,8 @@ const GridVideo: React.FC = () => {
   console.log('\n----------------------------------------\n')
   const max = useContext(MaxUidContext);
   const min = useContext(MinUidContext);
+  console.log(`GridVideo: max: ${JSON.stringify(max)}`)
+  console.log(`GridVideo: min: ${JSON.stringify(min)}`)
   const {rtcProps, styleProps} = useContext(PropsContext);
   const users =
     rtcProps.role === ClientRole.Audience
@@ -68,6 +70,7 @@ const GridVideo: React.FC = () => {
           {r.map((c, cidx) => {
             console.log(`GridVideoColumn: cidx: ${cidx} ridx: ${ridx}`)
             console.log(`GridVideoColumn: users[${ridx * dims.c + cidx}], user: ${JSON.stringify(users[ridx * dims.c + cidx])}`)
+            console.log('---')
             return (
               <View style={style.col} key={cidx}>
                 <View
