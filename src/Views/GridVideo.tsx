@@ -11,19 +11,20 @@ import MinUidContext from '../Contexts/MinUidContext';
 import MaxUidContext from '../Contexts/MaxUidContext';
 import PropsContext, {ClientRole} from '../Contexts/PropsContext';
 
-const layout = (len: number, isDesktop: boolean = true) => {
+const layout = (userCount: number, isDesktop: boolean = true) => {
   console.log('layout');
-  const rows = Math.round(Math.sqrt(len));
-  const cols = Math.ceil(len / rows);
+  const rows = Math.round(Math.sqrt(userCount));
+  const cols = Math.ceil(userCount / rows);
   let [r, c] = isDesktop ? [rows, cols] : [cols, rows];
   return {
     matrix:
-      len > 0
+    // Makes a 2D array of 'X's
+      userCount > 0
         ? [
             ...Array(r - 1)
               .fill(null)
               .map(() => Array(c).fill('X')),
-            Array(len - (r - 1) * c).fill('X'),
+            Array(userCount - (r - 1) * c).fill('X'),
           ]
         : [],
     dims: {r, c},
@@ -58,27 +59,33 @@ const GridVideo: React.FC = () => {
     () => layout(users.length, isDesktop),
     [users.length, isDesktop],
   );
+  console.log(`GridVideo: Users: ${users}`)
+  console.log(`GridVideo: Matrix: ${matrix}, Dims: ${dims}`)
   return (
     <View style={style.full} onLayout={onLayout}>
       {matrix.map((r, ridx) => (
         <View style={style.gridRow} key={ridx}>
-          {r.map((c, cidx) => (
-            <View style={style.col} key={cidx}>
-              <View
-                style={{
-                  ...style.gridVideoContainerInner,
-                  ...(styleProps?.gridVideoView as object),
-                }}>
-                {rtcProps.role === ClientRole.Audience &&
-                users[ridx * dims.c + cidx].uid === 'local' ? null : (
-                  <MaxVideoView
-                    user={users[ridx * dims.c + cidx]}
-                    key={users[ridx * dims.c + cidx].uid}
-                  />
-                )}
+          {r.map((c, cidx) => {
+            console.log(`GridVideoColumn: cidx: ${cidx} ridx: ${ridx}`)
+            console.log(`GridVideoColumn: users[${ridx * dims.c + cidx}], user: ${users[ridx * dims.c + cidx]}`)
+            return (
+              <View style={style.col} key={cidx}>
+                <View
+                  style={{
+                    ...style.gridVideoContainerInner,
+                    ...(styleProps?.gridVideoView as object),
+                  }}>
+                  {rtcProps.role === ClientRole.Audience &&
+                  users[ridx * dims.c + cidx].uid === 'local' ? null : (
+                    <MaxVideoView
+                      user={users[ridx * dims.c + cidx]}
+                      key={users[ridx * dims.c + cidx].uid}
+                    />
+                  )}
+                </View>
               </View>
-            </View>
-          ))}
+            )}
+          )}
         </View>
       ))}
     </View>
