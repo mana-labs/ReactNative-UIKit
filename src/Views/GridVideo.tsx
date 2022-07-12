@@ -12,7 +12,6 @@ import MaxUidContext from '../Contexts/MaxUidContext';
 import PropsContext, {ClientRole} from '../Contexts/PropsContext';
 
 const layout = (userCount: number, isDesktop: boolean = true) => {
-  console.log('layout');
   const rows = Math.round(Math.sqrt(userCount));
   const cols = Math.ceil(userCount / rows);
   let [r, c] = isDesktop ? [rows, cols] : [cols, rows];
@@ -32,6 +31,7 @@ const layout = (userCount: number, isDesktop: boolean = true) => {
 };
 
 const GridVideo: React.FC = () => {
+  console.log('\n----------------------------------------\n')
   const max = useContext(MaxUidContext);
   const min = useContext(MinUidContext);
   const {rtcProps, styleProps} = useContext(PropsContext);
