@@ -245,7 +245,7 @@ const quality = {
     dimensions: {
       // Square gang represent 🔲 
       width: Dimensions.get('screen').height,
-      height: Dimensions.get('screen').height,
+      height: Dimensions.get('screen').height * 0.75,
     },
     frameRate: 30,
     bitRate: 1380,
