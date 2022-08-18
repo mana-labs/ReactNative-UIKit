@@ -243,7 +243,7 @@ const quality = {
   },
   'dynamic': {
     dimensions: {
-      // Square gang represent 🔲 
+      // Send video in a 4:3 aspect ratio
       width: Dimensions.get('screen').height,
       height: Dimensions.get('screen').height * 0.75,
     },
