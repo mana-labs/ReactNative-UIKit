@@ -244,8 +244,8 @@ const quality = {
   'dynamic': {
     dimensions: {
       // Square gang represent 🔲 
-      width: Dimensions.get('screen').width,
-      height: Dimensions.get('screen').width,
+      width: Dimensions.get('screen').height,
+      height: Dimensions.get('screen').height,
     },
     frameRate: 30,
     bitRate: 1380,
